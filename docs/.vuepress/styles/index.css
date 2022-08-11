@@ -1,0 +1,4 @@
+.home-blog .hero h1,
+.home-blog .hero .description {
+  display: none;
+}
