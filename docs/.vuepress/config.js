@@ -1,14 +1,14 @@
 module.exports = {
   theme: 'reco',
-  title: " ",
-  description: ' ',
+  title: "一只黑猫的博客",
+  base: '/blog/',
   // 移动端优化
   head: [
     [
       'meta', 
         { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' },
       'link',
-      {rel: 'icon', href: 'avatar.png'}
+        {rel: 'icon', href: 'avatar.png'}
      ]
   ],
   // 主题设置
@@ -56,5 +56,11 @@ module.exports = {
         separator: '-'
       }
     ]
-  ]
+  ],
+  // 设置语言
+  locales: {
+    '/': {
+      lang: 'zh-CN'
+    }
+  }
 }
