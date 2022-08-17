@@ -2,8 +2,8 @@
 home: true
 bgImage: '/bg.png'
 bgImageStyle: {
-  height: '90vh',
+  height: '95vh',
   color: 'white',
-  margin: "38px auto 0"
+  margin: "60px auto 0"
 }
 ---
