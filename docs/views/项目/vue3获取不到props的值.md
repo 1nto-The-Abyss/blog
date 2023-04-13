@@ -1,6 +1,6 @@
 ---
 title: vue3获取不到props的值
-date: 2022-04-11
+date: 2023-04-11
 sidebar: auto
 tags:
  - 项目 
