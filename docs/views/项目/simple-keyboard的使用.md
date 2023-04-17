@@ -10,6 +10,10 @@ categories:
 ---
 
 参考文章[https://www.cnblogs.com/linjiangxian/p/16223681.html#_label1_1](https://www.cnblogs.com/linjiangxian/p/16223681.html#_label1_1)
+### 使用效果
+![img](https://cdn.nlark.com/yuque/0/2023/png/29284566/1681695976823-8a7ca927-3efb-4b7e-9431-6671bfca51d1.png)
+![img](https://cdn.nlark.com/yuque/0/2023/png/29284566/1681695997421-9e7eac47-4381-46ec-b164-9de4f41f1691.png)
+
 ### 键盘组件SimpleKeyboard/index
 ```javascript
 <template>
@@ -44,10 +48,12 @@ export default {
       '{space}': ' ',
       '{clear}': '清空',
       '{close}': '关闭',
+      '{numbers}': '123',
+      '{abc}': 'abc',
+      "{backspace}": "⌫",
     },
   }),
   mounted() {
-    // 不同地方调用组件时传入不同的keyboardClass
     this.keyboard = new Keyboard(this.keyboardClass, {
       onChange: this.onChange,
       onKeyPress: this.onKeyPress,
@@ -58,7 +64,7 @@ export default {
           '` 1 2 3 4 5 6 7 8 9 0 - = {bksp}',
           '{tab} q w e r t y u i o p [ ] \\',
           "{lock} a s d f g h j k l ; ' {enter}",
-          '{shift} z x c v b n m , . / {clear}',
+          '{shift} {numbers} z x c v b n m , . / {clear}',
           '{change} {space} {close}',
         ],
         // shift布局
@@ -66,9 +72,15 @@ export default {
           '~ ! @ # $ % ^ & * ( ) _ + {bksp}',
           '{tab} Q W E R T Y U I O P { } |',
           '{lock} A S D F G H J K L : " {enter}',
-          '{shift} Z X C V B N M &lt; &gt; ? {clear}',
+          '{shift} {numbers} Z X C V B N M &lt; &gt; ? {clear}',
           '{change} {space} {close}',
         ],
+        // 数字键盘布局
+        numbers: [
+          "1 2 3", 
+          "4 5 6", 
+          "7 8 9",
+          "{abc} 0 {backspace}"]
       },
       // 按钮展示文字
       display: this.displayDefault,
@@ -82,6 +94,9 @@ export default {
       // 点击关闭
       if (button === '{close}') {
         this.$emit("switchKeyboard",false)
+        // let keyboard = $event.path[3];
+        // keyboard.style.visibility = 'hidden';
+        this.$emit("")
         return false;
       } else if (button === '{change}') {
         // 切换中英文输入法
@@ -106,6 +121,7 @@ export default {
         this.$emit('onKeyPress', button);
       }
       if (button === "{shift}" || button === "{lock}") this.handleShift();
+      if (button === "{numbers}" || button === "{abc}") this.handleNumbers();
     },
     handleShift() {
       let currentLayout = this.keyboard.options.layoutName;
@@ -113,6 +129,15 @@ export default {
 
       this.keyboard.setOptions({
         layoutName: shiftToggle
+      });
+    },
+    // 切换数字键盘
+    handleNumbers() {
+      let currentLayout = this.keyboard.options.layoutName;
+      let numbersToggle = currentLayout !== "numbers" ? "numbers" : "default";
+
+      this.keyboard.setOptions({
+        layoutName: numbersToggle
       });
     }
   },
@@ -126,13 +151,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  // 一定要定位，不然页面上看不到
 #keyboard {
   position: fixed;
   bottom: 0;
-  width: 95%;
+  width: 100%;
   z-index: 9999;
-  font-size: 16px;
+  font-size: 24px;
+  font-weight: 600;
     // 中文文字选择框
   ::v-deep .hg-candidate-box {
     position: static;
@@ -143,11 +168,16 @@ export default {
       height: 50px;
     }
   }
+  ::v-deep .hg-button[data-skbtnuid^="numbers-"] {
+    height: 68px;
+    width: 33%;
+  }
   ::v-deep .hg-button {
     height: 45px;
   }
 }
 </style>
+
 
 ```
 
